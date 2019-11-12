@@ -216,7 +216,7 @@ Count10		equ	    0x25
 		movlw	    d'10'	    ; Load d'10' into W
 		movwf	    Count10	    ; Move W into Count10
 
-again10	call	blink
+again10		call	blink
 		decfsz	    Count10	    ; Decrement, test if Count10 = 0?
 		goto	    again10	    ; NO => Continue blinking
 stop		goto	    stop	    ; YES => Stop blinking
