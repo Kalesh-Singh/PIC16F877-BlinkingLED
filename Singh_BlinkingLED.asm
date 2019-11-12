@@ -197,7 +197,7 @@ again1s		call	    delay10ms
 ;			    Blink Subroutine
 ;
 ; Turns LED on for 1 second and then off for 1 second.
-;--------------------------------------------------------------------------		
+;--------------------------------------------------------------------------
 blink		bsf	    PORTB, RB0
 		call	    delay1s
 		bcf	    PORTB, RB0
@@ -212,16 +212,14 @@ start		bsf	    STATUS, RP0	    ; Select Bank 1
 		bcf	    STATUS, RP0	    ; Select Bank 0
 
 Count10		equ	    0x25
-		
+
 		movlw	    d'10'	    ; Load d'10' into W
-		movwf	    Count10	    ; Move W into Count10	
+		movwf	    Count10	    ; Move W into Count10
 
 again10	call	blink
 		decfsz	    Count10	    ; Decrement, test if Count10 = 0?
 		goto	    again10	    ; NO => Continue blinking
 stop		goto	    stop	    ; YES => Stop blinking
-		
+
 		end
-		
-		
-		
+
