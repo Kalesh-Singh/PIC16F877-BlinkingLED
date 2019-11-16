@@ -16,6 +16,14 @@
 #include <p16f877.inc>
 
 ;--------------------------------------------------------------------------
+; Set Configuration Bits (Disable Watchdog Timer)
+;--------------------------------------------------------------------------
+; CONFIG
+; __config 0xFFFB
+ __CONFIG _FOSC_EXTRC & _WDTE_OFF & _PWRTE_OFF & _CP_OFF & _BOREN_ON & _LVP_ON & _CPD_OFF & _WRT_ON
+
+
+;--------------------------------------------------------------------------
 ; Program Code
 ;--------------------------------------------------------------------------
 ;--------------------------------------------------------------------------
@@ -220,7 +228,7 @@ again10		call	    blink	    ; Blink LED
 		decfsz	    Count10	    ; Decrement, test if Count10 = 0?
 		goto	    again10	    ; NO => Continue blinking
 
-stop		goto	    stop	    ; YES => Stop blinking
+stop		goto	    stop	    ; YES => Stop blinking (Halt)
 
 		end
 
