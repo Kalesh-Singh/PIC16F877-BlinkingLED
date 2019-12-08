@@ -1,3 +1,6 @@
+; NOTE: Please Clean and Build after unzipping and opening the project for
+;       the first time.
+ 
 ;**************************************************************************
 ;			    BLINKING LED
 ;**************************************************************************
@@ -32,6 +35,30 @@
 
 		org	    0x0000
 		goto	    start
+		
+		nop
+		nop
+		nop
+		nop		
+
+;--------------------------------------------------------------------------
+; Main Program - Blinking LED 10 times
+;--------------------------------------------------------------------------
+start		bsf	    STATUS, RP0	    ; Select Bank 1
+		bcf	    TRISB, RB0	    ; Set TRISB<0> = 0 so PORTB<0> is an OUTPUT
+		bcf	    STATUS, RP0	    ; Select Bank 0
+
+Count10		equ	    0x25
+
+		movlw	    d'10'	    ; Load d'10' into W
+		movwf	    Count10	    ; Move W into Count10
+
+again10		call	    blink	    ; Blink LED
+		decfsz	    Count10	    ; Decrement, test if Count10 = 0?
+		goto	    again10	    ; NO => Continue blinking
+
+stop		goto	    stop	    ; YES => Stop blinking (Halt)
+
 
 ;--------------------------------------------------------------------------
 ;			    DELAY SUBROUTINES
@@ -40,9 +67,7 @@
 ; Operating speed:  DC, 20 MHz clock input
 ;		    DC, 200 ns instruction cycle
 ;--------------------------------------------------------------------------
-
-		org	    0x0005
-
+;
 ;--------------------------------------------------------------------------
 ;			    100us Delay
 ;--------------------------------------------------------------------------
@@ -211,24 +236,8 @@ blink		bsf	    PORTB, RB0
 		bcf	    PORTB, RB0
 		call	    delay1s
 		return
-
+		
 ;--------------------------------------------------------------------------
-; Main Program - Blinking LED 10 times
+;			    End
 ;--------------------------------------------------------------------------
-start		bsf	    STATUS, RP0	    ; Select Bank 1
-		bcf	    TRISB, RB0	    ; Set TRISB<0> = 0 so PORTB<0> is an OUTPUT
-		bcf	    STATUS, RP0	    ; Select Bank 0
-
-Count10		equ	    0x25
-
-		movlw	    d'10'	    ; Load d'10' into W
-		movwf	    Count10	    ; Move W into Count10
-
-again10		call	    blink	    ; Blink LED
-		decfsz	    Count10	    ; Decrement, test if Count10 = 0?
-		goto	    again10	    ; NO => Continue blinking
-
-stop		goto	    stop	    ; YES => Stop blinking (Halt)
-
 		end
-
